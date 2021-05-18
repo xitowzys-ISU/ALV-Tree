@@ -27,15 +27,24 @@ private:
     Node<T>* balance(Node<T>* p);
     Node<T>* insert(Node<T>* p, T key);
     
+    Node<T>* remove(Node<T>* p, T key);
+    
     void printTree(Node<T>* ptr, int level);
     
 public:
     Tree();
-//    ~Tree();
+    ~Tree();
     
-    Node<T>* insert(T key);
+    void insert(T key);
+    
+    T seek(T key);
+    T seekMin(Node<T>* p) const;
+    
+    Node<T>* remove(T key);
     void displayTree();
     void printLevelOrder();
+    
+    Node<T>* getRoot();
     
 };
 

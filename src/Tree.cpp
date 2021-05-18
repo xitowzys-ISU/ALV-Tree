@@ -13,6 +13,9 @@ Tree<T>::Tree(){
 }
 
 template<typename T>
+Tree<T>::~Tree() {}
+
+template<typename T>
 unsigned int Tree<T>::height(Node<T>* p) {
     return p?p->getHeight():0;
 }
@@ -64,7 +67,7 @@ Node<T>* Tree<T>::balance(Node<T>* p)
     }
     if(balanceFactor(p) == -2)
     {
-        if( balanceFactor(p->getPointerLeftChild()) > 0  )
+        if(balanceFactor(p->getPointerLeftChild()) > 0)
             p->setPointerLeftChild(leftTurn(p->getPointerLeftChild()));
         return rightTurn(p);
     }
@@ -74,6 +77,8 @@ Node<T>* Tree<T>::balance(Node<T>* p)
 template<typename T>
 Node<T>* Tree<T>::insert(Node<T>* p, T key)
 {
+    if(!root) return new Node<T>(key);
+    
     if(!p) return new Node<T>(key);
     
     if(key < p->getKey())
@@ -85,9 +90,45 @@ Node<T>* Tree<T>::insert(Node<T>* p, T key)
 }
 
 template<typename T>
-Node<T>* Tree<T>::insert(T key) {
+void Tree<T>::insert(T key) {
     root = insert(root, key);
-    return root;
+}
+
+template<typename T>
+T Tree<T>::seek(T key) {
+    
+    Node<T>* current = root;
+    
+    while(current != NULL) {
+        if (key == current->getKey())
+            return current->getKey();
+        if (key < current->getKey())
+            current = current->getPointerLeftChild();
+        else
+            current = current->getPointerRightChild();
+    }
+    
+    return current->getKey();
+}
+
+template<typename T>
+T Tree<T>::seekMin(Node<T>* p) const {
+    Node<T>* current = p;
+    while (current->getPointerLeftChild() != nullptr)
+        current = current->getPointerLeftChild();
+    return current->getKey();
+}
+
+
+// TODO: Сделать удаление
+template<typename T>
+Node<T>* Tree<T>::remove(Node<T> *p, T key) {
+    return NULL;
+}
+
+template<typename T>
+Node<T>* Tree<T>::remove(T key) {
+    root = remove(root, key);
 }
 
 template<typename T>
@@ -115,4 +156,9 @@ void Tree<T>::printTree(Node<T>* ptr, int level){
         printTree(ptr->getPointerLeftChild(), level-1);
         printTree(ptr->getPointerRightChild(), level-1);
     }
+}
+
+template<typename T>
+Node<T>* Tree<T>::getRoot() {
+    return root;
 }

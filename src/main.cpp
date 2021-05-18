@@ -22,6 +22,8 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "\n\n\n";
 
+    std::cout << tree.seekMin(tree.getRoot()) << std::endl;
+//
     tree.printLevelOrder();
     
     return 0;
