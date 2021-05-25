@@ -38,9 +38,14 @@ public:
     void insert(T key);
     
     T seek(T key);
-    T seekMin(Node<T>* p) const;
     
+    Node<T>* seekMin(Node<T>* p) const;
+    T seekMinKey(Node<T>* p) const;
+    
+    
+    Node<T>* removemin(Node<T>* p);
     Node<T>* remove(T key);
+    
     void displayTree();
     void printLevelOrder();
     

@@ -20,10 +20,11 @@ int main(int argc, const char * argv[]) {
         std::cout << value << " ";
     }
     
+    tree.remove(967);
+    
     std::cout << "\n\n\n";
 
-    std::cout << tree.seekMin(tree.getRoot()) << std::endl;
-//
+//    std::cout << tree.seekMin(tree.getRoot()) << std::endl;
     tree.printLevelOrder();
     
     return 0;

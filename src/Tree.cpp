@@ -112,18 +112,49 @@ T Tree<T>::seek(T key) {
 }
 
 template<typename T>
-T Tree<T>::seekMin(Node<T>* p) const {
+T Tree<T>::seekMinKey(Node<T>* p) const {
     Node<T>* current = p;
     while (current->getPointerLeftChild() != nullptr)
         current = current->getPointerLeftChild();
     return current->getKey();
 }
 
-
-// TODO: Сделать удаление
 template<typename T>
-Node<T>* Tree<T>::remove(Node<T> *p, T key) {
-    return NULL;
+Node<T>* Tree<T>::seekMin(Node<T>* p) const {
+    Node<T>* current = p;
+    while (current->getPointerLeftChild() != nullptr)
+        current = current->getPointerLeftChild();
+    return current;
+}
+
+template<typename T>
+Node<T>* Tree<T>::removemin(Node<T>* p)
+{
+    if(p->getPointerLeftChild() == 0)
+        return p->getPointerRightChild();
+    p->setPointerLeftChild(removemin(p->getPointerLeftChild()));
+    return balance(p);
+}
+
+template<typename T>
+Node<T>* Tree<T>::remove(Node<T> *p, T k) {
+    if( !p ) return 0;
+    if( k < p->getKey() )
+        p->setPointerLeftChild(remove(p->getPointerLeftChild(),k));
+    else if( k > p->getKey() )
+        p->setPointerRightChild(remove(p->getPointerRightChild(),k));
+    else
+    {
+        Node<T>* q = p->getPointerLeftChild();
+        Node<T>* r = p->getPointerRightChild();
+        delete p;
+        if( !r ) return q;
+        Node<T>* min = seekMin(r);
+        min->setPointerRightChild(removemin(r));
+        min->setPointerLeftChild(q);
+        return balance(min);
+    }
+    return balance(p);
 }
 
 template<typename T>
